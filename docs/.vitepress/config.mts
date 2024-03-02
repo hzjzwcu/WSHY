@@ -5,6 +5,7 @@ import AutoSidebar from 'vite-plugin-vitepress-auto-sidebar';
 export default defineConfig({
   title: "WSHY",
   description: "A VitePress Site",
+  base: '/repo/',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
