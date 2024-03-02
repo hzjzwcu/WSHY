@@ -22,7 +22,7 @@ export default defineConfig({
       { text: 'Vue', link: '/Vue/项目起步/vite+ts项目起步.md' },
     ],
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://github.com/hzjzwcu/WSHY' }
     ]
   },
   vite: {
