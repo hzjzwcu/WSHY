@@ -11,8 +11,8 @@ hero:
       text: 书签备忘录
       link: /其他/备忘录/书签.md
     - theme: alt
-      text: 常见题库
-      link: /面试题/2023面试题整理.md
+      text: 更新日志
+      link: /Logs/2024.md
 
 
 features:
