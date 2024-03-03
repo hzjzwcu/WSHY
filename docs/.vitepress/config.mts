@@ -10,7 +10,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: '面试题', link: '/面试题/2023面试题整理.md' },
+      { text: '面试题', link: '/面试题/待归档面试题.md' },
       { text: '其他', link: '/其他/备忘录/书签.md' },
       { text: 'Canvas', link: '/Canvas/基础/Canvas组件.md' },
       { text: 'CSS', link: '/CSS/超出省略.md' },
