@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "WSHY"
+  name: "wshy-docs"
   text: Talk is cheap. Show me the code.
   tagline: 代码胜于雄辩
   actions:

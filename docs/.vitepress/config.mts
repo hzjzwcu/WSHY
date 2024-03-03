@@ -3,9 +3,9 @@ import AutoSidebar from 'vite-plugin-vitepress-auto-sidebar';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "WSHY",
+  title: "wshy-docs",
   description: "A VitePress Site",
-  base: '/WSHY/',
+  base: '/wshy-docs/',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -22,7 +22,7 @@ export default defineConfig({
       { text: 'Vue', link: '/Vue/项目起步/vite+ts项目起步.md' },
     ],
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/hzjzwcu/WSHY' }
+      { icon: 'github', link: 'https://github.com/hzjzwcu/wshy-docs' }
     ]
   },
   vite: {
