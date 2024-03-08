@@ -93,7 +93,7 @@ const runInWorkLet9 = useWorklet('default', () => {
 }, []);
 ```
 
-worklet的上下文和js不一样，js中定义的变量和方法无法直接调用，如有需要，就需要使用useRunInJS创建一个新方法，如果有依赖可以放在第二个参数中，一旦依赖项发生变化，方法也会更新
+worklet的上下文和js不一样，**js中定义或引入的变量和方法都不能直接调用**，如有需要，就需要使用`useRunInJS`创建一个新方法，如果有依赖可以放在第二个参数中，一旦依赖项发生变化，方法也会更新
 
 ```ts
 const [endTime, setEndTime] = useState<number>(Date.now());
@@ -108,68 +108,77 @@ const setNewEndTime = useRunInJS(() => {
 
 ```tsx
 import { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native"
-import { useRunInJS, useWorklet } from "react-native-worklets-core";
+import { Alert, Button, Image, StyleSheet, Text, View } from "react-native"
+import { useRunInJS, useSharedValue, useWorklet } from "react-native-worklets-core";
 
 const App = () => {
-    const [startTime, setStartTime] = useState<number>(Date.now());
-    const [endTime, setEndTime] = useState<number>(Date.now());
+    const [curTime, setCurTime] = useState<Number>(0); // 时间戳
+    const runMsg = useSharedValue('等待中');
 
-    // 计算操作时长
-    const [msg, setMsg] = useState('等待中...');
     useEffect(() => {
-        setMsg(`操作完成，耗时：${(endTime - startTime) / 1000}秒`)
-    }, [endTime])
-
-    // 在worklet中运行js方法设置结束时间
-    const setNewEndTime = useRunInJS(() => {
-        setEndTime(Date.now());
-    }, []);
+        const timer = setInterval(() => {
+            setCurTime(Math.floor(Date.now()))
+        }, 500)
+        return () => {
+            clearInterval(timer)
+        }
+    }, [])
 
     // js 阻塞方法
-    const runInJs9 = () => {
+    const runInJs = () => {
+        const start = Date.now();
         let result = 0;
-        for (let i = 0; i < 1e9; i++) {
+        for (let i = 0; i < 1e8; i++) {
             result += i;
         }
-        setNewEndTime();
+        const end = Date.now();
+        const msg = `js操作完成，运行时长：${(end - start) / 1000} 秒`;
+        runMsg.value = msg;
     }
 
     // worklet 阻塞方法
-    const runInWorkLet9 = useWorklet('default', () => {
+    const runInWorkLet = useWorklet('default', () => {
         'worklet';
+        runMsg.value = '执行中，请等待...';
+        const start = Date.now();
         let result = 0;
-        for (let i = 0; i < 1e9; i++) {
+        for (let i = 0; i < 1e8; i++) {
             result += i;
         }
-        setNewEndTime()
+        const end = Date.now();
+        const msg = `worklet操作完成，运行时长：${(end - start) / 1000} 秒`;
+        runMsg.value = msg;
     }, []);
 
-    const run9 = (type: 'js' | 'worklet') => {
-        setStartTime(Date.now());
+    const run = (type: 'js' | 'worklet') => {
         if (type === 'js') {
-            runInJs9()
+            runInJs()
         } else {
-            runInWorkLet9()
-            setMsg(`WorkLet执行中，请稍等，当前页面UI逻辑未阻塞，可随意操作...`)
+            runInWorkLet()
         }
     }
 
     return (
         <View>
             <View style={styles.dividing} />
+            <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>useRunInJS/useWorklet</Text>
             <Text>该Demo用于展示worklet线程与js线程的差异</Text>
             <Text>当前使用循环来模拟耗时操作，循环次数越大需要处理的时间越长</Text>
 
             <View style={styles.dividing} />
-            <Text style={{ marginBottom: 10 }}>遍历1e9，可以观察阻塞UI</Text>
+            <Text style={{ marginBottom: 10 }}>通过 useWorklet 创建线程，在两个线程分别遍历1e8次</Text>
             <View style={{ flexDirection: 'row', gap: 10 }}>
-                <Button title="js" onPress={() => run9('js')} />
-                <Button title="WorkLet" onPress={() => run9('worklet')} />
+                <Button title="js" onPress={() => run('js')} />
+                <Button title="WorkLet" onPress={() => run('worklet')} />
             </View>
 
             <View style={styles.dividing} />
-            <Text style={{ marginBottom: 10 }}>{msg}</Text>
+            <Text>以下运行时长是通过 useSharedValue 展示，否则两个线程中不共享变量</Text>
+            <Text>{runMsg.value}</Text>
+
+            <View style={styles.dividing} />
+            <Text style={{ marginBottom: 10 }}>UI被阻塞的时候，下面时间戳的更新会停止：</Text>
+            <Text style={styles.time}>{curTime.toString()}</Text>
         </View>
     )
 }
@@ -182,16 +191,9 @@ const styles = StyleSheet.create({
         marginTop: 15,
         marginBottom: 15,
     },
-    input: {
-        width: '80%', // 输入框宽度
-        padding: 10, // 内边距
-        fontSize: 18, // 字体大小
-        borderWidth: 2, // 边框宽度
-        borderColor: '#007bff', // 边框颜色
-        borderRadius: 5, // 边框圆角
-        color: '#007bff', // 文本颜色
-        marginBottom: 20, // 与下方文本的间距
-    },
+    time: {
+        fontSize: 20
+    }
 })
 
 export default App;
