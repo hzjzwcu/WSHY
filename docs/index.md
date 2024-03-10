@@ -5,13 +5,12 @@ layout: home
 hero:
   name: "wshy-docs"
   text: Talk is cheap. Show me the code.
-  tagline: 代码胜于雄辩
   actions:
     - theme: brand
-      text: 书签备忘录
+      text: Bookmark
       link: /其他/备忘录/书签.md
     - theme: alt
-      text: 更新日志
+      text: Change Logs
       link: /Logs/2024.md
 
 

@@ -35,7 +35,7 @@ http响应 - 状态行、响应头、响应正文
 
 Set-Cookie,Refresh,Last-Modified,Expires,Content-Type,Allow
 
-## 浏览器显示HTMl
+## 浏览器显示HTML
 
 解析HTML构建DOM树，解析CSS构建渲染树，渲染树构建完成后就会开始布局和绘制，这里涉及回流和重绘
 
