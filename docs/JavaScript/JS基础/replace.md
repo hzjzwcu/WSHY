@@ -1,7 +1,4 @@
 # str.replace()
-
-[TOC]
-
 ### 一、用法
 
 `replace`方法用于在字符串中替换字符

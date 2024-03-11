@@ -12,13 +12,12 @@ export default defineConfig({
     logo: '/dogface2.svg',
     nav: [
       { text: 'Home', link: '/' },
-      { text: '待归档', link: '/面试题/待归档面试题.md' },
-      { text: '其他', link: '/其他/备忘录/书签.md' },
-      { text: '网络通信', link: '/网络通信/DNS解析.md' },
+      { text: '其他', link: '/其他/待归档.md' },
+      { text: '性能&网络', link: '/性能&网络/从输入URL到页面展示的过程.md' },
       {
         text: '前端',
         items: [
-          { text: 'JavaScript', link: '/JavaScript/JS基础/对象.md' },
+          { text: 'JavaScript', link: '/JavaScript/JS基础/作用域&提升&闭包.md' },
           { text: 'Typescript', link: '/Typescript/常用工具类.md' },
           { text: 'Canvas', link: '/Canvas/基础/Canvas组件.md' },
           { text: 'CSS', link: '/CSS/超出省略.md' },
