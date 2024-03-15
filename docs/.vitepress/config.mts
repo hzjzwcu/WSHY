@@ -49,7 +49,7 @@ export default defineConfig({
       AutoSidebar({
         beforeCreateSideBarItems: (data: string[]) => {
           for (let i = data.length - 1; i >= 0; i--) {
-            const matchList = ['.assets', '.png', 'jpg', 'gif'];
+            const matchList = ['.assets', '.png', 'jpg', 'gif','jpeg'];
             const isMatch = matchList.some(ext => data[i].endsWith(ext));
             if (isMatch) {
               data.splice(i, 1)
