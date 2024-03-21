@@ -1,6 +1,12 @@
 # GIT 命令
 
-## 常见指令
+# 常见指令
+
+- 只拉取指定分支代码
+  - `git clone --single-branch -b 分支名 仓库链接`
+  - `git clone -b <branch-name> --single-branch <repository-url>`
+- 查看所有分支
+  - `git branch -r`
 
 -   创建并切换分支
     -   `git checkout -b 分支名`
@@ -70,6 +76,13 @@
 - 使用 `git pull --rebase` 时，如果遇到冲突，同样需要手动解决冲突，并使用 `git rebase --continue` 继续 rebase 过程。
 
 选择哪种方法取决于你的具体情况和个人偏好。在处理较大的更改或多个分支时，`git stash` 可能是更安全的选择。对于较小的更改，`git pull --rebase` 可能更方便快捷。
+
+## 本地仓库关联远程
+
+- `git init` 初始化
+- `git remote add origin 仓库链接` 关联仓库
+- `git fetch origin 分支名`（不填分支名会全部拉取）
+- `git checkout -b 分支名 origin/分支名` 新建并关联分支
 
 ## hosts
 
