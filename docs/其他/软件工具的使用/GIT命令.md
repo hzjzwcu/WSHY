@@ -1,6 +1,6 @@
 # GIT 命令
 
-## 基础指令
+## 常见指令
 
 -   创建并切换分支
     -   `git checkout -b 分支名`
@@ -17,58 +17,61 @@
     -   `git push origin --delete 分支名`
 -   删除本地分支
     -   `git branch -d 分支名`
+
+## 统计数据
+
 -   查询单人提交某段时间所有记录
     -   `git log --since ==2021-01-01 --until=2021-05-31 --author="weisheng" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "新增： %s , 移除： %s , 总计： %s \n ", add, subs, loc }'`
 -   查询单人提交所有记录
     -   `git log --author="weisheng" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "新增: %s, 移除 %s, 总计: %s\n", add, subs, loc }'`
 
-## 修改commit
+## 保存修改并拉取代码
 
-### 1. 修改最近一次的提交
+在使用 Git 时，如果你想拉取（`pull`）最新的代码，同时又不想影响到你当前已经更改但尚未提交（`commit`）的内容，你可以使用以下几种方法：
 
-如果你只想修改最近的一次提交（例如，你忘记添加一个文件或者提交信息写错了），你可以使用`git commit --amend`命令。这会将当前的工作树的更改合并到上一个提交中。
+`git stash` 可以临时保存你的工作进度，让你的工作目录回到最近一次 `commit` 的状态。之后你可以安全地拉取最新的代码，然后再应用（`apply`）你之前保存的更改。
 
-```bash
-# 修改最近一次提交的提交信息
-git commit --amend -m "新的提交信息"
+步骤如下：
 
-# 将忘记添加的文件加入到最近一次的提交中
-git add 忘记添加的文件
-git commit --amend --no-edit  # 使用--no-edit保留之前的提交信息
-```
+1. **保存当前更改**：
 
-### 2. 修改历史提交
+   ```
+   bashCopy code
+   git stash
+   ```
 
-如果需要修改早期的某个提交，可以使用`git rebase`命令进行交互式变基操作。这种方式比较灵活，但如果是已经推送到远程仓库的提交，需要谨慎使用。
+   或者，为你的 stash 创建一个有意义的名字：
 
-```bash
-git rebase -i HEAD~N  # N是要回退的版本数，例如想要修改倒数第3次提交，N应为3
-```
+   ```
+   bashCopy code
+   git stash save "你的描述信息"
+   ```
 
-在打开的编辑器中，找到你想要修改的提交前的文字`pick`改为`edit`，然后保存退出。Git会停在那个提交上，此时你可以使用`git commit --amend`修改提交信息，或者做其他修改然后提交。完成修改后，运行：
+2. **拉取最新代码**：
 
-```bash
-git rebase --continue
-```
+   ```
+   bashCopy code
+   git pull
+   ```
 
-来继续应用余下的提交。
+3. **应用之前保存的更改**：
 
-### 3. 修改多个连续提交
+   ```
+   bashCopy code
+   git stash apply
+   ```
 
-使用`git rebase -i`命令，并且将所有想要修改的提交前面的`pick`改为`reword`。
+   如果你创建了多个 stash，你可以通过 `git stash list` 查看所有的 stash，并通过 `git stash apply stash@{n}` 应用指定的 stash，其中 `n` 是你想要应用的 stash 的编号。
 
-### 4.合并多个提交
+### 注意事项
 
-使用`git rebase -i`命令，并且将所有想要合并的提交前面的`pick`改为`squash`或者简写`s`（保留第一个不变）。
+- 在使用这些命令之前，确保你的工作目录是干净的，即除了你想要保留的更改之外，没有其他未提交的更改。这可以通过 `git status` 命令来检查。
+- 如果你使用 `git stash` 并且在 `git stash apply` 之后发现有冲突，你需要手动解决这些冲突。解决冲突后，不要忘记使用 `git add` 将解决后的文件标记为已解决，然后继续你的工作。
+- 使用 `git pull --rebase` 时，如果遇到冲突，同样需要手动解决冲突，并使用 `git rebase --continue` 继续 rebase 过程。
 
-### 注意
+选择哪种方法取决于你的具体情况和个人偏好。在处理较大的更改或多个分支时，`git stash` 可能是更安全的选择。对于较小的更改，`git pull --rebase` 可能更方便快捷。
 
-- 使用`git rebase`修改历史提交会改变提交的哈希值。如果这些提交已经被推送到了远程仓库，修改后需要强制推送（`git push --force`），这可能会影响其他人的工作。因此，在共享的分支上慎用此操作。
-- 在进行任何可能会更改提交历史的操作前，建议先创建一个分支备份，以防不测。
-
-
-
-## Github所需修改的hosts
+## hosts
 
 ```
 140.82.112.3 github.com
@@ -78,3 +81,4 @@ git rebase --continue
 185.199.110.153 assets-cdn.github.com
 185.199.111.153 assets-cdn.github.com
 ```
+
