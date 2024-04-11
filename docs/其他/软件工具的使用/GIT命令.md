@@ -24,14 +24,24 @@
 -   删除本地分支
     -   `git branch -d 分支名`
 
-## 统计数据
+# 合并多个提交
+
+Git 的 rebase 和 squash 功能可以合并多个提交，以三个提交为例，步骤如下：
+
+- `git rebase -i HEAD~3`  - 这将打开一个交互式 rebase 窗口，列出最近三个提交。
+- 按下 `i` 开始编辑，将待合并分支前的 "`pick`" 更改为 "`squash`" 或 "`s`"，要保留的分支前的`pick`不修改
+- `ESC`->`:wq ` 保存并退出，Git 将会合并您标记为 `squash` 的提交
+- 会自动打开一个新的编辑器窗口来编辑合并后的提交消息。删除不需要的信息后保存并关闭编辑器
+- `git push -f origin 分支名` 强制推送更改到远端
+
+# 统计数据
 
 -   查询单人提交某段时间所有记录
     -   `git log --since ==2021-01-01 --until=2021-05-31 --author="weisheng" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "新增： %s , 移除： %s , 总计： %s \n ", add, subs, loc }'`
 -   查询单人提交所有记录
     -   `git log --author="weisheng" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "新增: %s, 移除 %s, 总计: %s\n", add, subs, loc }'`
 
-## 保存修改并拉取代码
+# 保存修改并拉取代码
 
 在使用 Git 时，如果你想拉取（`pull`）最新的代码，同时又不想影响到你当前已经更改但尚未提交（`commit`）的内容，你可以使用以下几种方法：
 
@@ -42,34 +52,30 @@
 1. **保存当前更改**：
 
    ```
-   bashCopy code
    git stash
    ```
-
+   
    或者，为你的 stash 创建一个有意义的名字：
-
+   
    ```
-   bashCopy code
    git stash save "你的描述信息"
    ```
-
+   
 2. **拉取最新代码**：
 
    ```
-   bashCopy code
    git pull
    ```
-
+   
 3. **应用之前保存的更改**：
 
    ```
-   bashCopy code
    git stash apply
    ```
+   
+如果你创建了多个 stash，你可以通过 `git stash list` 查看所有的 stash，并通过 `git stash apply stash@{n}` 应用指定的 stash，其中 `n` 是你想要应用的 stash 的编号。
 
-   如果你创建了多个 stash，你可以通过 `git stash list` 查看所有的 stash，并通过 `git stash apply stash@{n}` 应用指定的 stash，其中 `n` 是你想要应用的 stash 的编号。
-
-### 注意事项
+## 注意事项
 
 - 在使用这些命令之前，确保你的工作目录是干净的，即除了你想要保留的更改之外，没有其他未提交的更改。这可以通过 `git status` 命令来检查。
 - 如果你使用 `git stash` 并且在 `git stash apply` 之后发现有冲突，你需要手动解决这些冲突。解决冲突后，不要忘记使用 `git add` 将解决后的文件标记为已解决，然后继续你的工作。
@@ -77,14 +83,14 @@
 
 选择哪种方法取决于你的具体情况和个人偏好。在处理较大的更改或多个分支时，`git stash` 可能是更安全的选择。对于较小的更改，`git pull --rebase` 可能更方便快捷。
 
-## 本地仓库关联远程
+# 本地仓库关联远程
 
 - `git init` 初始化
 - `git remote add origin 仓库链接` 关联仓库
 - `git fetch origin 分支名`（不填分支名会全部拉取）
 - `git checkout -b 分支名 origin/分支名` 新建并关联分支
 
-## hosts
+# hosts
 
 ```
 140.82.112.3 github.com
