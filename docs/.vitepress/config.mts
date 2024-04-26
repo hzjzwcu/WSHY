@@ -19,6 +19,7 @@ export default defineConfig({
         items: [
           { text: 'JavaScript', link: '/JavaScript/JS基础/作用域&提升&闭包.md' },
           { text: 'Typescript', link: '/Typescript/常用工具类.md' },
+          { text: 'ReactNative', link: '/ReactNative/RN新架构.md' },
           { text: 'Canvas', link: '/Canvas/基础/Canvas组件.md' },
           { text: 'CSS', link: '/CSS/超出省略.md' },
           { text: 'HTML', link: '/HTML/DOM操作.md' },
