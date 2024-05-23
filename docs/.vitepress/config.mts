@@ -13,6 +13,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: '其他', link: '/其他/软件工具的使用/GIT命令.md' },
+      { text: '命令行', link: '/命令行/GIT.md' },
       { text: '性能&网络', link: '/性能&网络/从输入URL到页面展示的过程.md' },
       {
         text: '前端',
