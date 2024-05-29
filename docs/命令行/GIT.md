@@ -7,22 +7,26 @@
   - `git clone -b <branch-name> --single-branch <repository-url>`
 - 查看所有分支
   - `git branch -r`
+- 创建并切换分支
+  -   `git checkout -b 分支名`
+- 回到指定版本
+  -   `git reset --hard 版本号`
+- 从远程仓库获取最新更改
+  - `git fetch origin`	
 
--   创建并切换分支
-    -   `git checkout -b 分支名`
--   回到指定版本
-    -   `git reset --hard 版本号`
--   使用某分支强制覆盖
-    -   `git reset --hard origin/分支名`
--   合并分支到 master
-    -   `git checkout master`
-    -   `git merge 分支名` 也可 `git merge --no-commit 分支名`从而部分合并
-    -   `git push origin master`
--   删除远程分支
-    -   `git fetch -p origin`（如果不能删除的话）
-    -   `git push origin --delete 分支名`
--   删除本地分支
-    -   `git branch -d 分支名`
+- 使用某分支强制覆盖
+  - `git fetch origin`
+  - `git reset --hard origin/分支名`
+
+- 合并分支到 master
+  -   `git checkout master`
+  -   `git merge 分支名` 也可 `git merge --no-commit 分支名`从而部分合并
+  -   `git push origin master`
+- 删除远程分支
+  -   `git fetch -p origin`（如果不能删除的话）
+  -   `git push origin --delete 分支名`
+- 删除本地分支
+  -   `git branch -d 分支名`
 
 ## 合并多个提交
 
