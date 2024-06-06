@@ -13,15 +13,18 @@
   -   `git reset --hard 版本号`
 - 从远程仓库获取最新更改
   - `git fetch origin`	
-
 - 使用某分支强制覆盖
   - `git fetch origin`
   - `git reset --hard origin/分支名`
-
 - 合并分支到 master
   -   `git checkout master`
   -   `git merge 分支名` 也可 `git merge --no-commit 分支名`从而部分合并
   -   `git push origin master`
+- 新建分支
+  - `git checkout -b 分支名`
+  - `git push origin 分支名`
+  - `git push --set-upstream origin 分支名`
+
 - 删除远程分支
   -   `git fetch -p origin`（如果不能删除的话）
   -   `git push origin --delete 分支名`
